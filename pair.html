@@ -10,53 +10,82 @@ background:black;
 color:red;
 font-family:monospace;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
 height:100vh;
 }
 
-.box{
-text-align:center;
+/* TITLE */
+h1{
+font-size:38px;
+margin-bottom:20px;
+text-shadow:0 0 20px red;
 }
 
+/* INPUT */
 input{
-width:260px;
-padding:18px;
-font-size:20px;
-margin:10px;
+width:85%;
+max-width:500px;
+padding:20px;
+font-size:22px;
+margin-bottom:20px;
 border:2px solid red;
 background:black;
 color:red;
+text-align:center;
 }
 
+/* BUTTON */
 button{
-width:280px;
-padding:18px;
-font-size:20px;
+width:85%;
+max-width:500px;
+padding:20px;
+font-size:22px;
 border:2px solid red;
 background:black;
 color:red;
 cursor:pointer;
 }
 
+button:hover{
+background:red;
+color:black;
+}
+
+/* RESULT */
 #res{
-margin-top:20px;
-font-size:22px;
+margin-top:30px;
+font-size:32px;
+font-weight:bold;
+text-align:center;
+word-break:break-word;
+}
+
+/* GLITCH */
+.glitch{
+animation:glitch 0.4s infinite;
+}
+
+@keyframes glitch{
+0%{transform:translate(1px,1px);}
+25%{transform:translate(-1px,-2px);}
+50%{transform:translate(-2px,1px);}
+75%{transform:translate(2px,2px);}
+100%{transform:translate(1px,-1px);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h2>PAIR CODE</h2>
+<h1 class="glitch">☠️ PAIR CODE ☠️</h1>
 
 <input id="num" placeholder="+243XXXXXXXXX">
 
-<button onclick="gen()">GENERATE</button>
+<button onclick="gen()">GENERATE SESSION</button>
 
 <p id="res"></p>
-</div>
 
 <script>
 async function gen(){
