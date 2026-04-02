@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>QR - THE PAIN</title>
+
+<style>
+body {
+  margin:0;
+  background:black;
+  color:red;
+  text-align:center;
+  font-family:monospace;
+}
+
+canvas {
+  position:fixed;
+  z-index:1;
+  pointer-events:none;
+}
+
+.container {
+  position:relative;
+  z-index:2;
+  margin-top:100px;
+}
+
+img {
+  width:200px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="rain"></canvas>
+
+<div class="container">
+<h2>☠️ QR SYSTEM ☠️</h2>
+<p id="status">LOADING...</p>
+<img id="qr">
+</div>
+
+<script>
+async function loadQR(){
+  let res = await fetch("/qr");
+  let data = await res.json();
+
+  document.getElementById("qr").src = data.qr;
+  document.getElementById("status").innerText = data.message;
+}
+loadQR();
+</script>
+
+<script>
+const canvas=document.getElementById("rain");
+const ctx=canvas.getContext("2d");
+
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+
+const letters="☠ THE PAIN ۞ 000";
+const matrix=letters.split("");
+
+const font_size=14;
+const columns=canvas.width/font_size;
+const drops=[];
+
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="red";
+ctx.font=font_size+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+let text=matrix[Math.floor(Math.random()*matrix.length)];
+ctx.fillText(text,i*font_size,drops[i]*font_size);
+
+if(drops[i]*font_size>canvas.height&&Math.random()>0.975)
+drops[i]=0;
+
+drops[i]++;
+}
+}
+setInterval(draw,35);
+</script>
+
+</body>
+</html>
