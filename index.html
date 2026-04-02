@@ -71,16 +71,22 @@ align-items:center;
 z-index:10;
 }
 
-.panel h2{
-margin-bottom:20px;
-}
-
 .close{
 position:absolute;
 top:20px;
 right:20px;
-font-size:20px;
 cursor:pointer;
+font-size:22px;
+}
+
+/* FOOTER */
+.footer{
+position:absolute;
+bottom:15px;
+font-size:14px;
+color:#aa0000;
+text-align:center;
+width:100%;
 }
 
 /* GLITCH */
@@ -116,24 +122,28 @@ animation:glitch 0.4s infinite;
 <!-- RESOURCES -->
 <div id="resources" class="panel">
 <div class="close" onclick="closePanel()">✖</div>
+
 <h2>📚 RESOURCES</h2>
 
 <button class="btn" onclick="openLink('https://github.com/The-Pain-01/The-Pain')">GITHUB</button>
 <button class="btn" onclick="openLink('https://whatsapp.com/channel/0029Vb7FTvDICVfgeK27ul2S')">CHANNEL</button>
 <button class="btn" onclick="openLink('https://the-pain-md-session-id-zjus.onrender.com')">BACKEND</button>
 
+<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
 </div>
 
 <!-- DEPLOY -->
 <div id="deploy" class="panel">
 <div class="close" onclick="closePanel()">✖</div>
+
 <h2>🚀 DEPLOY</h2>
 
 <button class="btn" onclick="openLink('https://dashboard.katabump.com')">KATABUMP</button>
 <button class="btn" onclick="openLink('https://discord.com')">DISCORD</button>
 <button class="btn" onclick="openLink('https://heroku.com')">HEROKU</button>
-<button class="btn" onclick="openLink('https://teoheberg.com')">MANAGER TEOHEBERG</button>
+<button class="btn" onclick="openLink('https://teoheberg.com')">TEOHEBERG</button>
 
+<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
 </div>
 
 <!-- INFO -->
@@ -146,9 +156,9 @@ animation:glitch 0.4s infinite;
 OWNER:<br><br>
 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄<br><br>
 
-Un esprit froid.  
-Calculateur.  
-Silencieux mais dangereux.<br><br>
+Un esprit froid.<br>
+Calculateur.<br>
+Une présence que même le silence respecte.<br><br>
 
 BOT:<br>
 THE PAIN MD<br><br>
@@ -158,7 +168,10 @@ Un système conçu pour contrôler, connecter et dominer.<br><br>
 ⚠️ Ce système n’est pas fait pour les faibles.
 </p>
 
+<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
 </div>
+
+<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
 
 <script>
 // MATRIX
@@ -195,11 +208,9 @@ setInterval(draw,33);
 function openPanel(id){
 document.getElementById(id).style.display="flex";
 }
-
 function closePanel(){
 document.querySelectorAll('.panel').forEach(p=>p.style.display="none");
 }
-
 function openLink(url){
 window.open(url);
 }
