@@ -2,26 +2,34 @@
 <html>
 <head>
 <title>QR</title>
+
 <style>
 body{
+margin:0;
 background:black;
 color:red;
 font-family:monospace;
-text-align:center;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
 }
+
+.box{
+text-align:center;
+}
+
 img{
-width:250px;
+width:320px;
+max-width:90%;
+margin-top:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div>
+<div class="box">
 <h2>QR CODE</h2>
 <p id="status">Loading...</p>
 <img id="qr">
