@@ -16,24 +16,20 @@ align-items:center;
 height:100vh;
 }
 
-h1{
-font-size:36px;
-text-shadow:0 0 20px red;
-}
+h1{font-size:40px;}
 
 img{
-width:90vw;
-max-width:500px;
+width:95vw;
+max-width:600px;
 margin-top:30px;
-border:5px solid red;
-padding:10px;
+border:6px solid red;
 background:white;
+padding:10px;
 }
 
 .footer{
 position:absolute;
-bottom:15px;
-color:#aa0000;
+bottom:10px;
 }
 </style>
 </head>
@@ -55,7 +51,6 @@ let data=await res.json();
 document.getElementById("qr").src=data.qr;
 document.getElementById("status").innerText=data.message;
 }
-
 load();
 </script>
 
