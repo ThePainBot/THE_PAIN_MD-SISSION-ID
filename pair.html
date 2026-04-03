@@ -1,81 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>PAIR</title>
+<meta charset="UTF-8">
+<title>PAIR - THE PAIN</title>
 
 <style>
-body{
-margin:0;
-background:black;
-color:red;
-font-family:monospace;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-height:100vh;
+body {
+  background:black;
+  color:red;
+  font-family: monospace;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
-h1{font-size:45px;}
-
-input{
-width:90%;
-max-width:600px;
-padding:25px;
-font-size:26px;
-margin:20px;
-border:2px solid red;
-background:black;
-color:red;
-text-align:center;
+.container {
+  width:95%;
+  max-width:600px;
+  text-align:center;
 }
 
-button{
-width:90%;
-max-width:600px;
-padding:25px;
-font-size:26px;
-border:2px solid red;
-background:black;
-color:red;
+h1 {
+  font-size:40px;
 }
 
-#res{
-font-size:40px;
-margin-top:30px;
-word-break:break-word;
-text-align:center;
+input {
+  width:100%;
+  padding:20px;
+  font-size:20px;
+  margin:15px 0;
+  background:black;
+  border:2px solid red;
+  color:red;
 }
 
-.footer{
-position:absolute;
-bottom:10px;
+button {
+  width:100%;
+  padding:20px;
+  font-size:20px;
+  background:black;
+  border:2px solid red;
+  color:red;
+  cursor:pointer;
+}
+
+#result {
+  margin-top:20px;
+  font-size:22px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>☠️ PAIR CODE ☠️</h1>
+<div class="container">
+  <h1>PAIR SYSTEM</h1>
 
-<input id="num" placeholder="+243XXXXXXXXX">
-<button onclick="gen()">GENERATE</button>
+  <input id="number" placeholder="+243XXXXXXXXX">
 
-<p id="res"></p>
+  <button onclick="gen()">GENERATE</button>
 
-<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
+  <div id="result"></div>
+
+  <p>POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</p>
+</div>
 
 <script>
 async function gen(){
-let n=document.getElementById("num").value;
-let r=document.getElementById("res");
-
-r.innerHTML="LOADING...";
-
-let data=await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number="+n);
-let j=await data.json();
-
-r.innerHTML=j.code;
+  let num = document.getElementById("number").value;
+  let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number="+num);
+  let data = await res.json();
+  document.getElementById("result").innerHTML = data.code;
 }
 </script>
 
