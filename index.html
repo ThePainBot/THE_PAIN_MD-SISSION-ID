@@ -1,45 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>THE PAIN MD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE PAIN SYSTEM</title>
 
 <style>
 body{
 margin:0;
+font-family:monospace;
 background:black;
 color:red;
-font-family:monospace;
-overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+height:100vh;
 }
 
-/* SCREENS */
-.screen{
-position:fixed;
-top:0;
-left:0;
+/* INTRO */
+#intro{
+position:absolute;
 width:100%;
 height:100%;
+background:black;
 display:flex;
-justify-content:center;
 align-items:center;
-flex-direction:column;
+justify-content:center;
+font-size:45px;
+z-index:10;
+animation:fadeOut 3s forwards 2s;
 }
 
-/* HIDDEN */
-.hidden{display:none}
+@keyframes fadeOut{
+to{opacity:0;visibility:hidden;}
+}
 
-/* TEXT */
+/* CONTAINER */
+.container{
+width:95%;
+max-width:520px;
+text-align:center;
+}
+
 h1{
-font-size:40px;
-text-shadow:0 0 20px red;
+font-size:42px;
+margin-bottom:5px;
+}
+
+p{
+color:#aaa;
 }
 
 /* BUTTON */
 .btn{
-width:300px;
-padding:18px;
-margin:10px;
+width:100%;
+padding:20px;
+margin:10px 0;
 font-size:20px;
 border:2px solid red;
 background:black;
@@ -47,175 +63,120 @@ color:red;
 cursor:pointer;
 }
 
-/* INPUT */
-input{
-padding:18px;
-width:300px;
-margin:10px;
-font-size:18px;
-background:black;
-color:red;
-border:2px solid red;
+.btn:hover{
+background:red;
+color:black;
+}
+
+/* MENU */
+#menu{
+margin-top:10px;
 }
 
 /* FOOTER */
 .footer{
-position:absolute;
-bottom:10px;
-color:#aa0000;
-}
-
-/* GLITCH */
-.glitch{
-animation:glitch .3s infinite;
-}
-@keyframes glitch{
-0%{transform:translate(1px,1px);}
-50%{transform:translate(-2px,2px);}
-100%{transform:translate(1px,-1px);}
-}
-
-/* MATRIX */
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
+margin-top:15px;
+font-size:14px;
+color:#777;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
+<div id="intro">☠️ THE PAIN SYSTEM LOCK ☠️</div>
 
-<!-- HACKER INTRO -->
-<div id="intro" class="screen">
-<pre id="terminal"></pre>
-</div>
+<div class="container">
 
-<!-- LOGIN -->
-<div id="login" class="screen hidden">
-<h1 class="glitch">SYSTEM LOCKED</h1>
-<input placeholder="IDENTITY">
-<input placeholder="PASSWORD">
-<button class="btn" onclick="enter()">ACCESS SYSTEM</button>
-</div>
-
-<!-- MAIN -->
-<div id="main" class="screen hidden">
-<h1 class="glitch">☠️ THE PAIN MD ☠️</h1>
+<h1>☠️ THE PAIN MD ☠️</h1>
+<p>PANNEAU DE CONTRÔLE SOMBRE</p>
 
 <button class="btn" onclick="location.href='qr.html'">QR CODE</button>
 <button class="btn" onclick="location.href='pair.html'">PAIR CODE</button>
 
-<button class="btn" onclick="openPanel('resources')">RESOURCES</button>
-<button class="btn" onclick="openPanel('deploy')">DEPLOY</button>
-<button class="btn" onclick="openPanel('info')">INFO</button>
+<button class="btn" onclick="toggleResources()">RESOURCES</button>
+<button class="btn" onclick="toggleDeploy()">DEPLOY</button>
+<button class="btn" onclick="toggleInfo()">INFO</button>
 
-<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
+<div id="menu"></div>
+
+<div class="footer">
+POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
 </div>
 
-<!-- PANELS -->
-<div id="resources" class="screen hidden">
-<h1>RESOURCES</h1>
-<button class="btn" onclick="openLink('https://github.com/The-Pain-01/The-Pain')">GITHUB</button>
-<button class="btn" onclick="openLink('https://whatsapp.com/channel/0029Vb7FTvDICVfgeK27ul2S')">CHANNEL</button>
-<button class="btn" onclick="openLink('https://the-pain-md-session-id-zjus.onrender.com')">BACKEND</button>
-<button class="btn" onclick="back()">BACK</button>
-<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
-</div>
-
-<div id="deploy" class="screen hidden">
-<h1>DEPLOY</h1>
-<button class="btn" onclick="openLink('https://dashboard.katabump.com')">KATABUMP</button>
-<button class="btn" onclick="openLink('https://discord.com')">DISCORD</button>
-<button class="btn" onclick="openLink('https://heroku.com')">HEROKU</button>
-<button class="btn" onclick="openLink('https://teoheberg.com')">TEOHEBERG</button>
-<button class="btn" onclick="back()">BACK</button>
-<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
-</div>
-
-<div id="info" class="screen hidden">
-<h1 class="glitch">SYSTEM INFO</h1>
-<p style="text-align:center;max-width:300px">
-OWNER:<br>⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄<br><br>
-Un esprit froid. Calculateur. Silencieux mais dangereux.<br><br>
-BOT: THE PAIN MD<br><br>
-⚠️ Not for weak minds.
-</p>
-<button class="btn" onclick="back()">BACK</button>
-<div class="footer">POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</div>
 </div>
 
 <script>
-// HACKER TEXT
-const text=[
-"> Initializing system...",
-"> Connecting to dark network...",
-"> Access granted...",
-"> Welcome THE PAIN..."
-];
 
-let i=0;
-function type(){
-if(i<text.length){
-document.getElementById("terminal").innerHTML+=text[i]+"\n";
-i++;
-setTimeout(type,700);
-}else{
-setTimeout(()=>{
-document.getElementById("intro").classList.add("hidden");
-document.getElementById("login").classList.remove("hidden");
-},1000);
-}
-}
-type();
-
-// LOGIN
-function enter(){
-document.getElementById("login").classList.add("hidden");
-document.getElementById("main").classList.remove("hidden");
+// RESOURCES
+function toggleResources(){
+document.getElementById("menu").innerHTML = `
+<button class="btn" onclick="window.open('https://github.com/The-Pain-01/The-Pain')">GITHUB</button>
+<button class="btn" onclick="window.open('https://whatsapp.com/channel/0029Vb7FTvDICVfgeK27ul2S')">CHANNEL</button>
+<button class="btn" onclick="window.open('https://the-pain-md-session-id-zjus.onrender.com')">BACKEND</button>
+`;
 }
 
-// PANELS
-function openPanel(id){
-document.getElementById("main").classList.add("hidden");
-document.getElementById(id).classList.remove("hidden");
-}
-function back(){
-document.querySelectorAll('.screen').forEach(e=>e.classList.add('hidden'));
-document.getElementById("main").classList.remove("hidden");
-}
-function openLink(url){
-window.open(url);
+// DEPLOY
+function toggleDeploy(){
+document.getElementById("menu").innerHTML = `
+<button class="btn" onclick="window.open('https://dashboard.katabump.com')">KATABUMP</button>
+<button class="btn" onclick="window.open('https://heroku.com')">HEROKU</button>
+<button class="btn" onclick="window.open('https://discord.com')">DISCORD</button>
+`;
 }
 
-// MATRIX
-const c=document.getElementById("matrix");
-const ctx=c.getContext("2d");
-c.height=window.innerHeight;
-c.width=window.innerWidth;
+// INFO (ULTRA VERSION FR)
+function toggleInfo(){
+document.getElementById("menu").innerHTML = `
+<div style="border:1px solid red;padding:15px;margin-top:10px">
 
-const letters="THEPAIN0123456789☠️";
-const arr=letters.split("");
-const drops=[];
-for(let i=0;i<256;i++)drops[i]=1;
+<h2>☠️ DOSSIER : THE PAIN ☠️</h2>
 
-function draw(){
-ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,c.width,c.height);
-ctx.fillStyle="red";
-ctx.font="14px monospace";
+<p>
+⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ n’est pas un simple utilisateur.<br><br>
 
-for(let i=0;i<drops.length;i++){
-const text=arr[Math.floor(Math.random()*arr.length)];
-ctx.fillText(text,i*10,drops[i]*10);
-if(drops[i]*10>c.height&&Math.random()>0.975) drops[i]=0;
-drops[i]++;
+C’est un esprit froid, précis, calculateur.<br>
+Il observe dans l’ombre, comprend tout… sans parler.<br><br>
+
+Là où les autres réfléchissent encore,<br>
+lui a déjà pris le contrôle.<br><br>
+
+Son intelligence ne se montre pas,<br>
+elle s’impose.<br><br>
+
+Son silence n’est pas vide…<br>
+il est chargé de décisions.<br><br>
+
+☠️ Il ne suit pas les règles… il les redéfinit.
+</p>
+
+<hr style="border-color:red">
+
+<h2>🤖 LE SYSTÈME : THE PAIN MD</h2>
+
+<p>
+THE PAIN MD n’est pas un simple bot WhatsApp.<br><br>
+
+C’est un système conçu pour connecter, contrôler et dominer.<br><br>
+
+Chaque session générée est une clé.<br>
+Chaque clé ouvre une porte.<br><br>
+
+QR ou Pair Code… peu importe la méthode,<br>
+le résultat reste le même : accès total.<br><br>
+
+Ce système ne dort pas.<br>
+Il surveille.<br>
+Il attend.<br><br>
+
+⚠️ Une fois connecté… il n’oublie jamais.
+</p>
+
+</div>
+`;
 }
-}
-setInterval(draw,33);
+
 </script>
 
 </body>
