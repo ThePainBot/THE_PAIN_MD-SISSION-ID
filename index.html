@@ -6,18 +6,12 @@
 <title>THE PAIN MD</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:monospace;
-}
-
 body{
+margin:0;
+font-family:monospace;
 background:black;
 color:red;
 overflow:hidden;
-height:100vh;
 }
 
 /* MATRIX */
@@ -27,32 +21,19 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:-2;
-}
-
-/* DARK OVERLAY */
-body::after{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
 /* PAGE */
 .page{
 position:absolute;
-top:0;
-left:0;
 width:100%;
 height:100%;
 display:none;
-justify-content:center;
-align-items:center;
 flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
 padding:20px;
 }
 
@@ -60,304 +41,177 @@ padding:20px;
 display:flex;
 }
 
-/* MAIN BOX */
-.box{
-width:95%;
-max-width:520px;
-border:2px solid rgba(255,0,0,0.7);
-background:rgba(0,0,0,0.72);
-padding:22px;
-backdrop-filter:blur(4px);
-box-shadow:
-0 0 15px red,
-0 0 30px rgba(255,0,0,0.4);
-text-align:center;
-}
-
-/* TITLES */
+/* TITRE */
 .title{
-font-size:44px;
-margin-bottom:8px;
-color:#ff1a1a;
-text-shadow:
-0 0 5px red,
-0 0 12px red,
-0 0 22px red;
+font-size:42px;
+margin-bottom:25px;
+animation:glitch 0.4s infinite;
 }
 
-.subtitle{
-font-size:18px;
-color:#bbb;
-margin-bottom:20px;
-}
-
-/* GLITCH */
-.glitch{
-position:relative;
-animation:glitch 0.18s infinite;
-}
-
-.glitch::before,
-.glitch::after{
-content:attr(data-text);
-position:absolute;
-left:0;
-top:0;
-width:100%;
-overflow:hidden;
-}
-
-.glitch::before{
-left:2px;
-text-shadow:-2px 0 #ff0000;
-clip-path:inset(0 0 45% 0);
-animation:glitchTop 0.2s infinite;
-}
-
-.glitch::after{
-left:-2px;
-text-shadow:2px 0 #fff;
-clip-path:inset(55% 0 0 0);
-animation:glitchBottom 0.15s infinite;
-}
-
+/* GLITCH SIMPLE */
 @keyframes glitch{
-0%{transform:translate(0)}
-20%{transform:translate(-1px,1px)}
-40%{transform:translate(1px,-1px)}
-60%{transform:translate(-1px,0)}
-80%{transform:translate(1px,1px)}
-100%{transform:translate(0)}
-}
-
-@keyframes glitchTop{
-0%{transform:translate(0)}
-50%{transform:translate(2px,-2px)}
-100%{transform:translate(-2px,2px)}
-}
-
-@keyframes glitchBottom{
-0%{transform:translate(0)}
-50%{transform:translate(-2px,2px)}
-100%{transform:translate(2px,-2px)}
+0%{opacity:1;transform:translate(0)}
+20%{opacity:0.8;transform:translate(-2px,2px)}
+40%{opacity:1;transform:translate(2px,-2px)}
+60%{opacity:0.9;transform:translate(-1px,1px)}
+80%{opacity:1;transform:translate(1px,-1px)}
+100%{opacity:1;transform:translate(0)}
 }
 
 /* BUTTONS */
-.btn{
-width:100%;
+button{
+width:260px;
 padding:18px;
-margin:10px 0;
-font-size:20px;
-background:rgba(0,0,0,0.85);
-color:red;
+margin:10px;
+font-size:18px;
 border:2px solid red;
+background:black;
+color:red;
 cursor:pointer;
-transition:0.25s;
-box-shadow:0 0 10px rgba(255,0,0,0.5);
+transition:0.3s;
 }
 
-.btn:hover{
-transform:scale(1.03);
+button:hover{
 background:red;
 color:black;
-box-shadow:
-0 0 10px red,
-0 0 25px red,
-0 0 40px red;
 }
 
-/* INFO TEXT */
-.info-box{
-border:1px solid red;
-padding:15px;
-margin-top:10px;
-text-align:left;
-color:#ddd;
-line-height:1.5;
-box-shadow:0 0 15px rgba(255,0,0,0.35);
-}
-
-.info-box h2{
-text-align:center;
-margin-bottom:12px;
-color:#ff1a1a;
-font-size:24px;
-}
-
-.info-box p{
-margin-bottom:18px;
-font-size:15px;
+/* TEXT INFO */
+.info{
+max-width:500px;
+color:#ccc;
+line-height:1.6;
 }
 
 /* FOOTER */
 .footer{
-margin-top:18px;
+position:absolute;
+bottom:20px;
 font-size:13px;
-color:#999;
-text-align:center;
+color:#888;
 }
 </style>
 </head>
+
 <body>
 
 <canvas id="matrix"></canvas>
 
-<!-- PAGE PRINCIPALE -->
-<div class="page active" id="mainPage">
-<div class="box">
+<!-- MAIN -->
+<div class="page active" id="main">
+<h1 class="title">☠️ THE PAIN MD ☠️</h1>
 
-<h1 class="title glitch" data-text="☠️ THE PAIN MD ☠️">
-☠️ THE PAIN MD ☠️
-</h1>
-
-<div class="subtitle">PANNEAU DE CONTRÔLE SOMBRE</div>
-
-<button class="btn glitch" onclick="location.href='qr.html'" data-text="QR CODE">QR CODE</button>
-<button class="btn glitch" onclick="location.href='pair.html'" data-text="PAIR CODE">PAIR CODE</button>
-<button class="btn glitch" onclick="openPage('resourcesPage')" data-text="RESOURCES">RESOURCES</button>
-<button class="btn glitch" onclick="openPage('deployPage')" data-text="DEPLOY">DEPLOY</button>
-<button class="btn glitch" onclick="openPage('infoPage')" data-text="INFO">INFO</button>
+<button onclick="go('qr.html')">QR CODE</button>
+<button onclick="go('pair.html')">PAIR CODE</button>
+<button onclick="openPage('resources')">RESOURCES</button>
+<button onclick="openPage('deploy')">DEPLOY</button>
+<button onclick="openPage('info')">INFO</button>
 
 <div class="footer">
 POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
 </div>
-
-</div>
 </div>
 
-<!-- PAGE RESOURCES -->
-<div class="page" id="resourcesPage">
-<div class="box">
+<!-- RESOURCES -->
+<div class="page" id="resources">
+<h1 class="title">☠️ RESOURCES ☠️</h1>
 
-<h1 class="title glitch" data-text="☠️ RESOURCES ☠️">
-☠️ RESOURCES ☠️
-</h1>
+<button onclick="window.open('https://github.com/The-Pain-01/The-Pain')">GITHUB</button>
+<button onclick="window.open('https://whatsapp.com/channel/0029Vb7FTvDICVfgeK27ul2S')">CHANNEL</button>
+<button onclick="window.open('https://the-pain-md-session-id-zjus.onrender.com')">BACKEND</button>
 
-<button class="btn glitch" onclick="window.open('https://github.com/The-Pain-01/The-Pain')" data-text="GITHUB">GITHUB</button>
-
-<button class="btn glitch" onclick="window.open('https://whatsapp.com/channel/0029Vb7FTvDICVfgeK27ul2S')" data-text="CHANNEL">CHANNEL</button>
-
-<button class="btn glitch" onclick="window.open('https://the-pain-md-session-id-zjus.onrender.com')" data-text="BACKEND">BACKEND</button>
-
-<button class="btn glitch" onclick="openPage('mainPage')" data-text="BACK">BACK</button>
+<button onclick="openPage('main')">BACK</button>
 
 <div class="footer">
 POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
 </div>
-
-</div>
 </div>
 
-<!-- PAGE DEPLOY -->
-<div class="page" id="deployPage">
-<div class="box">
+<!-- DEPLOY -->
+<div class="page" id="deploy">
+<h1 class="title">☠️ DEPLOY ☠️</h1>
 
-<h1 class="title glitch" data-text="☠️ DEPLOY ☠️">
-☠️ DEPLOY ☠️
-</h1>
+<button onclick="window.open('https://dashboard.katabump.com')">KATABUMP</button>
+<button onclick="window.open('https://discord.com')">DISCORD</button>
+<button onclick="window.open('https://heroku.com')">HEROKU</button>
+<button onclick="window.open('https://manager.teoheberg.com')">MANAGER</button>
 
-<button class="btn glitch" onclick="window.open('https://dashboard.katabump.com')" data-text="KATABUMP">KATABUMP</button>
-
-<button class="btn glitch" onclick="window.open('https://discord.com')" data-text="DISCORD">DISCORD</button>
-
-<button class="btn glitch" onclick="window.open('https://heroku.com')" data-text="HEROKU">HEROKU</button>
-
-<button class="btn glitch" onclick="window.open('https://manager.teoheberg.com')" data-text="MANAGER.TEOHEBERG">MANAGER.TEOHEBERG</button>
-
-<button class="btn glitch" onclick="openPage('mainPage')" data-text="BACK">BACK</button>
+<button onclick="openPage('main')">BACK</button>
 
 <div class="footer">
 POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
 </div>
-
-</div>
 </div>
 
-<!-- PAGE INFO -->
-<div class="page" id="infoPage">
-<div class="box">
+<!-- INFO -->
+<div class="page" id="info">
+<h1 class="title">☠️ DOSSIER : THE PAIN ☠️</h1>
 
-<div class="info-box">
-
-<h2 class="glitch" data-text="☠️ DOSSIER : THE PAIN ☠️">
-☠️ DOSSIER : THE PAIN ☠️
-</h2>
-
+<div class="info">
 <p>
 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ n’est pas un simple utilisateur.<br><br>
 
 C’est un esprit froid, précis, calculateur.<br>
-Il voit ce que les autres ignorent.<br>
-Il comprend ce que les autres ne remarquent même pas.<br><br>
+Il voit ce que les autres ne voient pas.<br><br>
 
-Son silence n’est pas une faiblesse.<br>
-C’est une arme.<br><br>
+Là où les autres hésitent, lui agit.<br>
+Là où les autres suivent, lui contrôle.<br><br>
 
-Là où les autres suivent les règles, lui les redéfinit.<br>
-Là où les autres attendent, lui agit.<br><br>
+Son silence est une arme.<br>
+Son intelligence est invisible mais dominante.<br><br>
 
-Il ne cherche pas à impressionner.<br>
-Sa présence suffit.
+☠️ Il ne suit pas le système… il le crée.
 </p>
 
-<h2 class="glitch" data-text="🤖 LE SYSTÈME : THE PAIN MD">
-🤖 LE SYSTÈME : THE PAIN MD
-</h2>
+<h1 class="title">🤖 THE PAIN MD</h1>
 
 <p>
-THE PAIN MD n’est pas un simple bot WhatsApp.<br><br>
+THE PAIN MD est un système conçu pour connecter et contrôler.<br><br>
 
-C’est un système sombre conçu pour contrôler, connecter et dominer.<br><br>
+QR ou Pair Code… chaque connexion ouvre une porte.<br><br>
 
-QR Code ou Pair Code… chaque connexion ouvre une porte.<br>
-Et une fois la porte ouverte, le système prend le contrôle.<br><br>
+Une fois activé, le système reste.<br>
+Il observe. Il attend. Il agit.<br><br>
 
-Rapide. Stable. Glacial.<br><br>
-
-THE PAIN MD surveille, attend et agit au bon moment.<br><br>
-
-⚠️ Une fois connecté… il ne disparaît jamais.
+⚠️ Ce n’est pas un simple bot… c’est un contrôle.
 </p>
-
 </div>
 
-<button class="btn glitch" onclick="openPage('mainPage')" data-text="BACK">BACK</button>
+<button onclick="openPage('main')">BACK</button>
 
 <div class="footer">
 POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
-</div>
-
 </div>
 </div>
 
 <script>
 function openPage(id){
-document.querySelectorAll('.page').forEach(page=>{
-page.classList.remove('active');
-});
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 }
 
-/* MATRIX RAIN */
+function go(url){
+window.location.href = url;
+}
+
+/* MATRIX */
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const chars = "THEPAIN0123456789☠︎⚠︎⛧✞";
+const chars = "THEPAIN0123456789☠︎⚠︎";
 const letters = chars.split("");
 
 const fontSize = 16;
 const columns = canvas.width / fontSize;
 const drops = [];
 
-for(let x=0;x<columns;x++){
-drops[x]=1;
-}
+for(let i=0;i<columns;i++) drops[i]=1;
 
 function draw(){
-ctx.fillStyle="rgba(0,0,0,0.08)";
+ctx.fillStyle="rgba(0,0,0,0.05)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
 ctx.fillStyle="#ff0000";
@@ -365,7 +219,6 @@ ctx.font=fontSize+"px monospace";
 
 for(let i=0;i<drops.length;i++){
 const text=letters[Math.floor(Math.random()*letters.length)];
-
 ctx.fillText(text,i*fontSize,drops[i]*fontSize);
 
 if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
@@ -377,11 +230,6 @@ drops[i]++;
 }
 
 setInterval(draw,35);
-
-window.addEventListener("resize",()=>{
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-});
 </script>
 
 </body>
