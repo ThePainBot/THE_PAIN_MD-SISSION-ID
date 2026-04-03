@@ -16,16 +16,13 @@ align-items:center;
 height:100vh;
 }
 
-h1{
-font-size:38px;
-text-shadow:0 0 20px red;
-}
+h1{font-size:45px;}
 
 input{
-width:85%;
-max-width:500px;
-padding:20px;
-font-size:22px;
+width:90%;
+max-width:600px;
+padding:25px;
+font-size:26px;
 margin:20px;
 border:2px solid red;
 background:black;
@@ -34,25 +31,25 @@ text-align:center;
 }
 
 button{
-width:85%;
-max-width:500px;
-padding:20px;
-font-size:22px;
+width:90%;
+max-width:600px;
+padding:25px;
+font-size:26px;
 border:2px solid red;
 background:black;
 color:red;
-cursor:pointer;
 }
 
 #res{
+font-size:40px;
 margin-top:30px;
-font-size:32px;
+word-break:break-word;
+text-align:center;
 }
 
 .footer{
 position:absolute;
-bottom:15px;
-color:#aa0000;
+bottom:10px;
 }
 </style>
 </head>
@@ -75,13 +72,10 @@ let r=document.getElementById("res");
 
 r.innerHTML="LOADING...";
 
-try{
 let data=await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number="+n);
 let j=await data.json();
+
 r.innerHTML=j.code;
-}catch{
-r.innerHTML="ERROR";
-}
 }
 </script>
 
