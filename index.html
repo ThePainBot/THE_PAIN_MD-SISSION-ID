@@ -3,180 +3,385 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE PAIN SYSTEM</title>
+<title>THE PAIN MD</title>
 
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:monospace;
+}
+
+body{
 background:black;
 color:red;
-display:flex;
-align-items:center;
-justify-content:center;
+overflow:hidden;
 height:100vh;
 }
 
-/* INTRO */
-#intro{
-position:absolute;
+/* MATRIX */
+canvas{
+position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
-background:black;
-display:flex;
-align-items:center;
+z-index:-2;
+}
+
+/* DARK OVERLAY */
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.55);
+z-index:-1;
+}
+
+/* PAGE */
+.page{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
 justify-content:center;
-font-size:45px;
-z-index:10;
-animation:fadeOut 3s forwards 2s;
+align-items:center;
+flex-direction:column;
+padding:20px;
 }
 
-@keyframes fadeOut{
-to{opacity:0;visibility:hidden;}
+.page.active{
+display:flex;
 }
 
-/* CONTAINER */
-.container{
+/* MAIN BOX */
+.box{
 width:95%;
 max-width:520px;
+border:2px solid rgba(255,0,0,0.7);
+background:rgba(0,0,0,0.72);
+padding:22px;
+backdrop-filter:blur(4px);
+box-shadow:
+0 0 15px red,
+0 0 30px rgba(255,0,0,0.4);
 text-align:center;
 }
 
-h1{
-font-size:42px;
-margin-bottom:5px;
+/* TITLES */
+.title{
+font-size:44px;
+margin-bottom:8px;
+color:#ff1a1a;
+text-shadow:
+0 0 5px red,
+0 0 12px red,
+0 0 22px red;
 }
 
-p{
-color:#aaa;
+.subtitle{
+font-size:18px;
+color:#bbb;
+margin-bottom:20px;
 }
 
-/* BUTTON */
+/* GLITCH */
+.glitch{
+position:relative;
+animation:glitch 0.18s infinite;
+}
+
+.glitch::before,
+.glitch::after{
+content:attr(data-text);
+position:absolute;
+left:0;
+top:0;
+width:100%;
+overflow:hidden;
+}
+
+.glitch::before{
+left:2px;
+text-shadow:-2px 0 #ff0000;
+clip-path:inset(0 0 45% 0);
+animation:glitchTop 0.2s infinite;
+}
+
+.glitch::after{
+left:-2px;
+text-shadow:2px 0 #fff;
+clip-path:inset(55% 0 0 0);
+animation:glitchBottom 0.15s infinite;
+}
+
+@keyframes glitch{
+0%{transform:translate(0)}
+20%{transform:translate(-1px,1px)}
+40%{transform:translate(1px,-1px)}
+60%{transform:translate(-1px,0)}
+80%{transform:translate(1px,1px)}
+100%{transform:translate(0)}
+}
+
+@keyframes glitchTop{
+0%{transform:translate(0)}
+50%{transform:translate(2px,-2px)}
+100%{transform:translate(-2px,2px)}
+}
+
+@keyframes glitchBottom{
+0%{transform:translate(0)}
+50%{transform:translate(-2px,2px)}
+100%{transform:translate(2px,-2px)}
+}
+
+/* BUTTONS */
 .btn{
 width:100%;
-padding:20px;
+padding:18px;
 margin:10px 0;
 font-size:20px;
-border:2px solid red;
-background:black;
+background:rgba(0,0,0,0.85);
 color:red;
+border:2px solid red;
 cursor:pointer;
+transition:0.25s;
+box-shadow:0 0 10px rgba(255,0,0,0.5);
 }
 
 .btn:hover{
+transform:scale(1.03);
 background:red;
 color:black;
+box-shadow:
+0 0 10px red,
+0 0 25px red,
+0 0 40px red;
 }
 
-/* MENU */
-#menu{
+/* INFO TEXT */
+.info-box{
+border:1px solid red;
+padding:15px;
 margin-top:10px;
+text-align:left;
+color:#ddd;
+line-height:1.5;
+box-shadow:0 0 15px rgba(255,0,0,0.35);
+}
+
+.info-box h2{
+text-align:center;
+margin-bottom:12px;
+color:#ff1a1a;
+font-size:24px;
+}
+
+.info-box p{
+margin-bottom:18px;
+font-size:15px;
 }
 
 /* FOOTER */
 .footer{
-margin-top:15px;
-font-size:14px;
-color:#777;
+margin-top:18px;
+font-size:13px;
+color:#999;
+text-align:center;
 }
 </style>
 </head>
-
 <body>
 
-<div id="intro">☠️ THE PAIN SYSTEM LOCK ☠️</div>
+<canvas id="matrix"></canvas>
 
-<div class="container">
+<!-- PAGE PRINCIPALE -->
+<div class="page active" id="mainPage">
+<div class="box">
 
-<h1>☠️ THE PAIN MD ☠️</h1>
-<p>PANNEAU DE CONTRÔLE SOMBRE</p>
+<h1 class="title glitch" data-text="☠️ THE PAIN MD ☠️">
+☠️ THE PAIN MD ☠️
+</h1>
 
-<button class="btn" onclick="location.href='qr.html'">QR CODE</button>
-<button class="btn" onclick="location.href='pair.html'">PAIR CODE</button>
+<div class="subtitle">PANNEAU DE CONTRÔLE SOMBRE</div>
 
-<button class="btn" onclick="toggleResources()">RESOURCES</button>
-<button class="btn" onclick="toggleDeploy()">DEPLOY</button>
-<button class="btn" onclick="toggleInfo()">INFO</button>
-
-<div id="menu"></div>
+<button class="btn glitch" onclick="location.href='qr.html'" data-text="QR CODE">QR CODE</button>
+<button class="btn glitch" onclick="location.href='pair.html'" data-text="PAIR CODE">PAIR CODE</button>
+<button class="btn glitch" onclick="openPage('resourcesPage')" data-text="RESOURCES">RESOURCES</button>
+<button class="btn glitch" onclick="openPage('deployPage')" data-text="DEPLOY">DEPLOY</button>
+<button class="btn glitch" onclick="openPage('infoPage')" data-text="INFO">INFO</button>
 
 <div class="footer">
 POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
 </div>
 
 </div>
+</div>
 
-<script>
+<!-- PAGE RESOURCES -->
+<div class="page" id="resourcesPage">
+<div class="box">
 
-// RESOURCES
-function toggleResources(){
-document.getElementById("menu").innerHTML = `
-<button class="btn" onclick="window.open('https://github.com/The-Pain-01/The-Pain')">GITHUB</button>
-<button class="btn" onclick="window.open('https://whatsapp.com/channel/0029Vb7FTvDICVfgeK27ul2S')">CHANNEL</button>
-<button class="btn" onclick="window.open('https://the-pain-md-session-id-zjus.onrender.com')">BACKEND</button>
-`;
-}
+<h1 class="title glitch" data-text="☠️ RESOURCES ☠️">
+☠️ RESOURCES ☠️
+</h1>
 
-// DEPLOY
-function toggleDeploy(){
-document.getElementById("menu").innerHTML = `
-<button class="btn" onclick="window.open('https://dashboard.katabump.com')">KATABUMP</button>
-<button class="btn" onclick="window.open('https://heroku.com')">HEROKU</button>
-<button class="btn" onclick="window.open('https://discord.com')">DISCORD</button>
-`;
-}
+<button class="btn glitch" onclick="window.open('https://github.com/The-Pain-01/The-Pain')" data-text="GITHUB">GITHUB</button>
 
-// INFO (ULTRA VERSION FR)
-function toggleInfo(){
-document.getElementById("menu").innerHTML = `
-<div style="border:1px solid red;padding:15px;margin-top:10px">
+<button class="btn glitch" onclick="window.open('https://whatsapp.com/channel/0029Vb7FTvDICVfgeK27ul2S')" data-text="CHANNEL">CHANNEL</button>
 
-<h2>☠️ DOSSIER : THE PAIN ☠️</h2>
+<button class="btn glitch" onclick="window.open('https://the-pain-md-session-id-zjus.onrender.com')" data-text="BACKEND">BACKEND</button>
+
+<button class="btn glitch" onclick="openPage('mainPage')" data-text="BACK">BACK</button>
+
+<div class="footer">
+POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
+</div>
+
+</div>
+</div>
+
+<!-- PAGE DEPLOY -->
+<div class="page" id="deployPage">
+<div class="box">
+
+<h1 class="title glitch" data-text="☠️ DEPLOY ☠️">
+☠️ DEPLOY ☠️
+</h1>
+
+<button class="btn glitch" onclick="window.open('https://dashboard.katabump.com')" data-text="KATABUMP">KATABUMP</button>
+
+<button class="btn glitch" onclick="window.open('https://discord.com')" data-text="DISCORD">DISCORD</button>
+
+<button class="btn glitch" onclick="window.open('https://heroku.com')" data-text="HEROKU">HEROKU</button>
+
+<button class="btn glitch" onclick="window.open('https://manager.teoheberg.com')" data-text="MANAGER.TEOHEBERG">MANAGER.TEOHEBERG</button>
+
+<button class="btn glitch" onclick="openPage('mainPage')" data-text="BACK">BACK</button>
+
+<div class="footer">
+POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
+</div>
+
+</div>
+</div>
+
+<!-- PAGE INFO -->
+<div class="page" id="infoPage">
+<div class="box">
+
+<div class="info-box">
+
+<h2 class="glitch" data-text="☠️ DOSSIER : THE PAIN ☠️">
+☠️ DOSSIER : THE PAIN ☠️
+</h2>
 
 <p>
 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ n’est pas un simple utilisateur.<br><br>
 
 C’est un esprit froid, précis, calculateur.<br>
-Il observe dans l’ombre, comprend tout… sans parler.<br><br>
+Il voit ce que les autres ignorent.<br>
+Il comprend ce que les autres ne remarquent même pas.<br><br>
 
-Là où les autres réfléchissent encore,<br>
-lui a déjà pris le contrôle.<br><br>
+Son silence n’est pas une faiblesse.<br>
+C’est une arme.<br><br>
 
-Son intelligence ne se montre pas,<br>
-elle s’impose.<br><br>
+Là où les autres suivent les règles, lui les redéfinit.<br>
+Là où les autres attendent, lui agit.<br><br>
 
-Son silence n’est pas vide…<br>
-il est chargé de décisions.<br><br>
-
-☠️ Il ne suit pas les règles… il les redéfinit.
+Il ne cherche pas à impressionner.<br>
+Sa présence suffit.
 </p>
 
-<hr style="border-color:red">
-
-<h2>🤖 LE SYSTÈME : THE PAIN MD</h2>
+<h2 class="glitch" data-text="🤖 LE SYSTÈME : THE PAIN MD">
+🤖 LE SYSTÈME : THE PAIN MD
+</h2>
 
 <p>
 THE PAIN MD n’est pas un simple bot WhatsApp.<br><br>
 
-C’est un système conçu pour connecter, contrôler et dominer.<br><br>
+C’est un système sombre conçu pour contrôler, connecter et dominer.<br><br>
 
-Chaque session générée est une clé.<br>
-Chaque clé ouvre une porte.<br><br>
+QR Code ou Pair Code… chaque connexion ouvre une porte.<br>
+Et une fois la porte ouverte, le système prend le contrôle.<br><br>
 
-QR ou Pair Code… peu importe la méthode,<br>
-le résultat reste le même : accès total.<br><br>
+Rapide. Stable. Glacial.<br><br>
 
-Ce système ne dort pas.<br>
-Il surveille.<br>
-Il attend.<br><br>
+THE PAIN MD surveille, attend et agit au bon moment.<br><br>
 
-⚠️ Une fois connecté… il n’oublie jamais.
+⚠️ Une fois connecté… il ne disparaît jamais.
 </p>
 
 </div>
-`;
+
+<button class="btn glitch" onclick="openPage('mainPage')" data-text="BACK">BACK</button>
+
+<div class="footer">
+POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
+</div>
+
+</div>
+</div>
+
+<script>
+function openPage(id){
+document.querySelectorAll('.page').forEach(page=>{
+page.classList.remove('active');
+});
+document.getElementById(id).classList.add('active');
 }
 
+/* MATRIX RAIN */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const chars = "THEPAIN0123456789☠︎⚠︎⛧✞";
+const letters = chars.split("");
+
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+const drops = [];
+
+for(let x=0;x<columns;x++){
+drops[x]=1;
+}
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.08)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#ff0000";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+const text=letters[Math.floor(Math.random()*letters.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+drops[i]=0;
+}
+
+drops[i]++;
+}
+}
+
+setInterval(draw,35);
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
 </script>
 
 </body>
