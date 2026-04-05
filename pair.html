@@ -5,49 +5,70 @@
 <title>PAIR - THE PAIN</title>
 
 <style>
-body{
+body {
+  margin:0;
   background:black;
   color:red;
-  font-family:monospace;
+  font-family: monospace;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
 }
 
-.container{
+/* CONTAINER */
+.container {
   width:95%;
-  max-width:600px;
+  max-width:700px;
   text-align:center;
 }
 
-h1{
-  font-size:50px;
+/* TITLE */
+h1 {
+  font-size:55px;
+  margin-bottom:20px;
 }
 
-input{
+/* INPUT */
+input {
   width:100%;
   padding:25px;
   font-size:22px;
   margin:20px 0;
-  border:2px solid red;
   background:black;
+  border:3px solid red;
   color:red;
+  text-align:center;
 }
 
-button{
+/* BUTTON */
+button {
   width:100%;
   padding:25px;
   font-size:22px;
-  border:2px solid red;
   background:black;
+  border:3px solid red;
   color:red;
   cursor:pointer;
+  transition:0.2s;
 }
 
-#result{
-  margin-top:25px;
-  font-size:28px;
+button:hover {
+  background:red;
+  color:black;
+}
+
+/* RESULT */
+#result {
+  margin-top:30px;
+  font-size:26px;
+  word-break: break-word;
+}
+
+/* FOOTER */
+.footer {
+  margin-top:40px;
+  font-size:14px;
 }
 </style>
 </head>
@@ -55,35 +76,44 @@ button{
 <body>
 
 <div class="container">
-<h1>PAIR SYSTEM</h1>
+  <h1>☠️ PAIR SYSTEM ☠️</h1>
 
-<input id="number" placeholder="+243XXXXXXXXX">
+  <input id="number" placeholder="+243XXXXXXXXX">
 
-<button onclick="gen()">GENERATE</button>
+  <button onclick="gen()">⚡ GENERATE SESSION ⚡</button>
 
-<div id="result"></div>
+  <div id="result"></div>
 
-<p>POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</p>
+  <div class="footer">
+    POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
+  </div>
 </div>
 
 <script>
-async function gen(){
-  let num = document.getElementById("number").value;
+async function gen() {
+  const num = document.getElementById("number").value.trim();
+  const result = document.getElementById("result");
 
-  if(!num){
-    alert("Enter number");
+  if (!num) {
+    result.innerHTML = "❌ ENTRE TON NUMÉRO";
     return;
   }
 
-  document.getElementById("result").innerHTML = "LOADING...";
+  result.innerHTML = "⏳ GÉNÉRATION...";
 
-  try{
-    let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number="+encodeURIComponent(num));
-    let data = await res.json();
+  try {
+    const res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number=" + encodeURIComponent(num));
 
-    document.getElementById("result").innerHTML = data.code || "ERROR";
-  }catch{
-    document.getElementById("result").innerHTML = "SERVER ERROR";
+    const data = await res.json();
+
+    if (data.code) {
+      result.innerHTML = "✅ CODE : " + data.code;
+    } else {
+      result.innerHTML = "❌ ERREUR";
+    }
+
+  } catch (err) {
+    result.innerHTML = "❌ BACKEND OFF OU ERREUR";
   }
 }
 </script>
