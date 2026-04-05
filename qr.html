@@ -5,21 +5,21 @@
 <title>QR - THE PAIN</title>
 
 <style>
-body{
+body {
   background:black;
   color:red;
-  font-family:monospace;
+  font-family: monospace;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
 }
 
-.container{
+.container {
   text-align:center;
 }
 
-img{
+img {
   width:400px;
   height:400px;
   margin-top:20px;
@@ -30,23 +30,18 @@ img{
 <body>
 
 <div class="container">
-<h1>QR SYSTEM</h1>
+  <h1>QR SYSTEM</h1>
 
-<img id="qr">
+  <img id="qr">
 
-<p>POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</p>
+  <p>POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</p>
 </div>
 
 <script>
 async function load(){
-  try{
-    let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/qr");
-    let data = await res.json();
-
-    document.getElementById("qr").src = data.qr;
-  }catch{
-    alert("QR ERROR");
-  }
+  let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/qr");
+  let data = await res.json();
+  document.getElementById("qr").src = data.qr;
 }
 load();
 </script>
