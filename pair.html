@@ -1,138 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE PAIN MD - PAIR</title>
+<title>PAIR - THE PAIN</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: monospace;
-}
-
 body {
-  margin: 0;
-  height: 100vh;
-  background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: red;
+  background:black;
+  color:red;
+  font-family: monospace;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
-/* CARD */
-.card {
-  width: 95%;
-  max-width: 650px;
-  padding: 40px;
-  border: 2px solid red;
-  text-align: center;
-  box-shadow: 0 0 40px red;
+.container {
+  width:95%;
+  max-width:700px;
+  text-align:center;
 }
 
-/* TITLE */
-h2 {
-  font-size: 40px;
-  margin-bottom: 10px;
+h1 {
+  font-size:50px;
 }
 
-/* INPUT */
 input {
-  width: 100%;
-  padding: 20px;
-  font-size: 22px;
-  background: black;
-  border: 2px solid red;
-  color: red;
-  margin-top: 20px;
+  width:100%;
+  padding:25px;
+  font-size:22px;
+  margin:15px 0;
+  background:black;
+  border:2px solid red;
+  color:red;
 }
 
-/* BUTTON */
 button {
-  width: 100%;
-  padding: 20px;
-  font-size: 22px;
-  margin-top: 20px;
-  background: black;
-  border: 2px solid red;
-  color: red;
-  cursor: pointer;
+  width:100%;
+  padding:25px;
+  font-size:22px;
+  background:black;
+  border:2px solid red;
+  color:red;
+  cursor:pointer;
 }
 
-button:hover {
-  background: red;
-  color: black;
-}
-
-/* RESULT */
-#pair {
-  margin-top: 25px;
-  font-size: 22px;
-}
-
-/* COPY */
-.copy-btn {
-  margin-top: 15px;
-  padding: 15px;
-  border: 2px solid red;
-  background: black;
-  color: red;
-  cursor: pointer;
+#result {
+  margin-top:20px;
+  font-size:28px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
+  <h1>PAIR SYSTEM</h1>
 
-<h2>☠ THE PAIN MD ☠</h2>
+  <input id="number" placeholder="+277XXXXXXXXX">
 
-<p>ENTER NUMBER • GENERATE SESSION</p>
+  <button onclick="gen()">GENERATE SESSION</button>
 
-<input type="text" id="number" placeholder="+243XXXXXXXXX">
+  <div id="result"></div>
 
-<button onclick="gen()">GENERATE</button>
-
-<div id="pair"></div>
-
-<p>POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</p>
-
+  <p>POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</p>
 </div>
 
 <script>
-async function gen() {
+async function gen(){
   let num = document.getElementById("number").value;
-  let result = document.getElementById("pair");
 
-  if (!num || num.replace(/[^0-9]/g, "").length < 11) {
-    result.innerHTML = "❌ INVALID NUMBER";
+  // 🔥 nettoyage numéro
+  num = num.replace(/[^0-9]/g, '');
+
+  if(num.length < 11){
+    document.getElementById("result").innerHTML = "❌ NUMERO INVALIDE";
     return;
   }
 
-  result.innerHTML = "⏳ GENERATING SESSION...";
+  document.getElementById("result").innerHTML = "⏳ GENERATING...";
 
   try {
     let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number=" + num);
     let data = await res.json();
 
-    let code = data.code || "ERROR";
+    if(data.code){
+      document.getElementById("result").innerHTML = "✅ CODE: " + data.code;
+    } else {
+      document.getElementById("result").innerHTML = "❌ ERROR";
+    }
 
-    result.innerHTML = `
-      ☠️ SESSION KEY ☠️ <br><br>
-      ${code}
-      <br><br>
-      <button class="copy-btn" onclick="copy('${code}')">COPY</button>
-    `;
-  } catch (err) {
-    result.innerHTML = "❌ CONNECTION ERROR";
+  } catch (err){
+    document.getElementById("result").innerHTML = "❌ SERVER ERROR";
   }
-}
-
-function copy(text) {
-  navigator.clipboard.writeText(text);
-  alert("COPIED");
 }
 </script>
 
