@@ -17,7 +17,7 @@ body {
 
 .container {
   width:95%;
-  max-width:700px;
+  max-width:600px;
   text-align:center;
 }
 
@@ -29,7 +29,7 @@ input {
   width:100%;
   padding:25px;
   font-size:22px;
-  margin:15px 0;
+  margin:20px 0;
   background:black;
   border:2px solid red;
   color:red;
@@ -47,7 +47,7 @@ button {
 
 #result {
   margin-top:20px;
-  font-size:28px;
+  font-size:24px;
 }
 </style>
 </head>
@@ -57,9 +57,9 @@ button {
 <div class="container">
   <h1>PAIR SYSTEM</h1>
 
-  <input id="number" placeholder="+277XXXXXXXXX">
+  <input id="number" placeholder="+243XXXXXXXXX">
 
-  <button onclick="gen()">GENERATE SESSION</button>
+  <button onclick="gen()">GENERATE</button>
 
   <div id="result"></div>
 
@@ -70,28 +70,20 @@ button {
 async function gen(){
   let num = document.getElementById("number").value;
 
-  // 🔥 nettoyage numéro
-  num = num.replace(/[^0-9]/g, '');
-
-  if(num.length < 11){
-    document.getElementById("result").innerHTML = "❌ NUMERO INVALIDE";
+  if(!num){
+    document.getElementById("result").innerHTML = "ENTER NUMBER";
     return;
   }
 
-  document.getElementById("result").innerHTML = "⏳ GENERATING...";
+  document.getElementById("result").innerHTML = "LOADING...";
 
-  try {
-    let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number=" + num);
+  try{
+    let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number=" + encodeURIComponent(num));
     let data = await res.json();
 
-    if(data.code){
-      document.getElementById("result").innerHTML = "✅ CODE: " + data.code;
-    } else {
-      document.getElementById("result").innerHTML = "❌ ERROR";
-    }
-
-  } catch (err){
-    document.getElementById("result").innerHTML = "❌ SERVER ERROR";
+    document.getElementById("result").innerHTML = data.code || "ERROR";
+  }catch(e){
+    document.getElementById("result").innerHTML = "SERVER ERROR";
   }
 }
 </script>
