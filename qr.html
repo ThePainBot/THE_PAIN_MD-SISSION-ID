@@ -5,7 +5,8 @@
 <title>QR - THE PAIN</title>
 
 <style>
-body {
+body{
+  margin:0;
   background:black;
   color:red;
   font-family: monospace;
@@ -13,15 +14,39 @@ body {
   justify-content:center;
   align-items:center;
   height:100vh;
+  overflow:hidden;
 }
 
-.container {
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+.container{
   text-align:center;
 }
 
-img {
-  width:400px;
-  height:400px;
+h1{
+  font-size:60px;
+  animation:glitch 1s infinite;
+}
+
+@keyframes glitch{
+  0%{text-shadow:2px 2px red;}
+  50%{text-shadow:-2px -2px crimson;}
+  100%{text-shadow:2px -2px darkred;}
+}
+
+img{
+  width:420px;
+  height:420px;
+  margin-top:30px;
+  border:5px solid red;
+}
+
+.footer{
   margin-top:20px;
 }
 </style>
@@ -29,19 +54,58 @@ img {
 
 <body>
 
+<canvas id="matrix"></canvas>
+
 <div class="container">
-  <h1>QR SYSTEM</h1>
+  <h1>☠️ QR SYSTEM ☠️</h1>
 
   <img id="qr">
 
-  <p>POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸</p>
+  <div class="footer">
+    POWERED BY 🩸 ⏤͟͟͞𝐓𝐇𝐄 ➪ 𝐏𝐀𝐈𝐍 ᭄ 🩸
+  </div>
 </div>
 
 <script>
+// MATRIX
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "THEPAIN☠️123456789";
+const fontSize = 14;
+const columns = canvas.width/fontSize;
+
+const drops = Array.from({length:columns}).fill(1);
+
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle="red";
+  ctx.font=fontSize+"px monospace";
+
+  drops.forEach((y,i)=>{
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,y*fontSize);
+
+    if(y*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(draw,33);
+
+// LOAD QR
 async function load(){
-  let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/qr");
-  let data = await res.json();
-  document.getElementById("qr").src = data.qr;
+  try{
+    let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/qr");
+    let data = await res.json();
+    document.getElementById("qr").src = data.qr;
+  }catch{
+    alert("QR ERROR");
+  }
 }
 load();
 </script>
