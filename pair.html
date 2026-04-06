@@ -5,7 +5,8 @@
 <title>PAIR - THE PAIN</title>
 
 <style>
-body {
+body{
+  margin:0;
   background:black;
   color:red;
   font-family: monospace;
@@ -13,85 +14,80 @@ body {
   justify-content:center;
   align-items:center;
   height:100vh;
-  margin:0;
+  overflow:hidden;
+}
+
+/* MATRIX RAIN */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
 }
 
 /* CONTAINER */
-.container {
+.container{
   width:95%;
   max-width:700px;
   text-align:center;
 }
 
-/* TITRE */
-h1 {
+/* TITRE GLITCH */
+h1{
   font-size:60px;
-  margin-bottom:20px;
-  text-shadow:0 0 20px red;
+  animation:glitch 1s infinite;
+}
+
+@keyframes glitch{
+  0%{text-shadow:2px 2px red;}
+  50%{text-shadow:-2px -2px crimson;}
+  100%{text-shadow:2px -2px darkred;}
 }
 
 /* INPUT */
-input {
+input{
   width:100%;
-  padding:28px;
-  font-size:24px;
-  margin:25px 0;
+  padding:25px;
+  font-size:22px;
+  margin:20px 0;
   background:black;
   border:2px solid red;
   color:red;
-  text-align:center;
 }
 
 /* BUTTON */
-button {
+button{
   width:100%;
-  padding:28px;
+  padding:25px;
   font-size:24px;
   background:black;
   border:2px solid red;
   color:red;
   cursor:pointer;
-  transition:0.2s;
 }
 
-button:hover {
+button:hover{
   background:red;
   color:black;
-  box-shadow:0 0 20px red;
 }
 
 /* RESULT */
-#result {
+#result{
+  margin-top:25px;
+  font-size:26px;
+  word-break:break-all;
+}
+
+.footer{
   margin-top:30px;
-  font-size:28px;
-  word-break:break-word;
-}
-
-/* LOADER */
-.loader {
-  border:4px solid black;
-  border-top:4px solid red;
-  border-radius:50%;
-  width:40px;
-  height:40px;
-  margin:auto;
-  animation:spin 1s linear infinite;
-}
-
-@keyframes spin {
-  100% { transform: rotate(360deg); }
-}
-
-/* FOOTER */
-.footer {
-  margin-top:40px;
   font-size:14px;
-  opacity:0.7;
 }
 </style>
 </head>
 
 <body>
+
+<canvas id="matrix"></canvas>
 
 <div class="container">
   <h1>☠️ PAIR SYSTEM ☠️</h1>
@@ -108,43 +104,49 @@ button:hover {
 </div>
 
 <script>
+// MATRIX RAIN
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "THEPAIN0123456789☠️";
+const fontSize = 14;
+const columns = canvas.width/fontSize;
+
+const drops = Array.from({length:columns}).fill(1);
+
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle="red";
+  ctx.font=fontSize+"px monospace";
+
+  drops.forEach((y,i)=>{
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,y*fontSize);
+
+    if(y*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(draw,33);
+
+// FETCH
 async function gen(){
-  const input = document.getElementById("number");
-  const result = document.getElementById("result");
+  let num = document.getElementById("number").value;
 
-  let num = input.value.trim();
-
-  // 🔥 VALIDATION
-  if(!num){
-    result.innerHTML = "❌ ENTER NUMBER";
-    return;
-  }
-
-  // 🔥 nettoyage numéro
-  num = num.replace(/[^0-9+]/g, "");
-
-  // 🔥 LOADING UI
-  result.innerHTML = '<div class="loader"></div>';
+  document.getElementById("result").innerHTML="LOADING...";
 
   try{
-    const res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number=" + encodeURIComponent(num));
+    let res = await fetch("https://the-pain-md-session-id-zjus.onrender.com/code?number="+num);
+    let data = await res.json();
 
-    // 🔥 si backend crash
-    if(!res.ok){
-      result.innerHTML = "❌ BACKEND ERROR";
-      return;
-    }
-
-    const data = await res.json();
-
-    if(data.code){
-      result.innerHTML = "🔥 SESSION:<br><br>" + data.code;
-    }else{
-      result.innerHTML = "❌ INVALID RESPONSE";
-    }
-
-  }catch(e){
-    result.innerHTML = "❌ SERVER OFFLINE";
+    document.getElementById("result").innerHTML = data.code || "ERROR";
+  }catch{
+    document.getElementById("result").innerHTML = "SERVER ERROR";
   }
 }
 </script>
